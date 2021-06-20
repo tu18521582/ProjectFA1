@@ -4,18 +4,19 @@ import Input from "./Input";
 
 
 function App() {
-    const [name, setName] = useState("");
-    const [index, setIndex] = useState({});
-    const [nameCompany, setnameCompany] = useState("");
-    const [dataCanslim, setDataCanslim] = useState([]);
-    const [company, setCompany] = useState({});
-    const array2019 = [];
-    const array2020 = [];
-    const array2021 = [];
+    const [name, setName] = useState("");// ma chung khoan cua cong ty
+    const [index, setIndex] = useState({});//index cua quy cua nam can tim 
+    const [nameCompany, setnameCompany] = useState(""); //ten cua cong ty
+    const [dataCanslim, setDataCanslim] = useState([]); //result cua api  
+    const [company, setCompany] = useState({}); //hinh anh cua cong ty
+    const array2019 = []; //index cua cac quy trong nam 2019
+    const array2020 = []; //index cua cac quy trong nam 2020
+    const array2021 = []; //index cua cac quy trong nam 2021
+
     useEffect(() => {
         async function fetchDataCompany() {
             try {
-                //vndirect
+                //getImageCompany
                 const requestUrl = `https://sb-api.stockbook.vn/api/stocks/${name}/stats?api_version=2.4`;
                 const response = await fetch(requestUrl);
                 const responseJSON = await response.json();
@@ -30,7 +31,7 @@ function App() {
     useEffect(() => {
         async function fetchNameCompany() {
             try {
-                //vndirect
+                //getNameCompany
                 const requestUrl = `https://finfo-api.vndirect.com.vn/v4/stocks?fields=companyName&q=code:${name}`;
                 const response = await fetch(requestUrl);
                 const responseJSON = await response.json();
@@ -45,7 +46,7 @@ function App() {
     useEffect(() => {
         async function fetchDataCanslim() {
             try {
-                //cafef
+                //getNetSaleAndEps
                 const requestUrl = `https://api4.fialda.com/api/services/app/TechnicalAnalysis/GetFinancialHighlights?symbol=${name}`;
                 const response = await fetch(requestUrl);
                 const responseJSON = await response.json();
@@ -68,7 +69,6 @@ function App() {
                     }
                     setDataCanslim(arr);
                 }
-                console.log(arr);
                 if (arr) {
                     for (var j = 0; j < arr.length; j++) {
                         if (arr[j].year === 2019 && arr[j].quarter < 5) {
@@ -108,7 +108,6 @@ function App() {
         setName(inputData);
     }
     console.log(dataCanslim);
-    console.log(dataCanslim[(index.year2021)[0]].netSale);
     return (
         <div className="App">
             <div>
